@@ -25,58 +25,83 @@ let arr = [
     title: "Dağ 4",
     par: "Açıklama 4",
   },
-  
 ];
 
 function App() {
-  const [list, setList] = useState(arr)
-  const [title, setTitle] = useState("")
-  const [paragraph, setParagraph] = useState("")
+  const [list, setList] = useState(arr);
+  const [title, setTitle] = useState("");
+  const [paragraph, setParagraph] = useState("");
 
   // Kart Ekleme Butonu
   const click = () => {
-    setTitle("")
-    setParagraph("")
-    const copyList = [...list]
-    copyList.push({
-      id:5,
-      title: title,
-      par:paragraph
-    })
-    setList(copyList)
-  }
-  
+    setTitle(""); // Butona tıklandıktan sonra inputlardaki değerlerin silinmesi için.
+    setParagraph("");
+    // const copyList = [...list] // 2 şekilde de yazılabilir. Aşağıdaki yöntem daha kısadır.
+    // copyList.unshift({
+    //   id:5,
+    //   title: title,
+    //   par:paragraph
+    // })
+    setList([
+      // Doğrudan setList içine yazmak daha kısa bir yöntemdir.
+      {
+        id: 5,
+        title: title,
+        par: paragraph,
+      },
+      ...list,
+    ]);
+  };
+
   return (
     <Container className="App" size={1000}>
       <h1>Kart Oluşturma</h1>
 
       <Stack>
-        <Input.Wrapper label="Başlık"> {/* Input'a label eklemek için "Input.Wrapper" ile kapsadık. */}
-          <Input placeholder="Başlık yazınız.." value={title} onChange={(e) => {setTitle(e.target.value)}} ></Input>
+        <Input.Wrapper label="Başlık">
+          {" "}
+          {/* Input'a label eklemek için "Input.Wrapper" ile kapsadık. */}
+          <Input
+            placeholder="Başlık yazınız.."
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          ></Input>
         </Input.Wrapper>
 
-        <Textarea placeholder="Paragraf yazınız.." label="Paragraf" withAsterisk value={paragraph} onChange={(e) => {setParagraph(e.target.value)}}></Textarea>
-
-        
+        <Textarea
+          placeholder="Paragraf yazınız.."
+          label="Paragraf"
+          withAsterisk
+          value={paragraph}
+          onChange={(e) => {
+            setParagraph(e.target.value);
+          }}
+        ></Textarea>
       </Stack>
-      <div style={{ display: 'flex', justifyContent: 'center',}}>
-        <Button color="teal" radius="md" size="md" mt={20} style={{ width: '20%'}} onClick={click}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          color="teal"
+          radius="md"
+          size="md"
+          mt={20}
+          style={{ width: "20%" }}
+          onClick={click}
+        >
           Kart ekle
         </Button>
       </div>
-     
 
       <Grid className="Cards">
-
-          {list.map(({ par, title }, i) => (
-            <Grid.Col span={4} key={`index ${i}`}> {/* hangi elemanı map'liyorsak, çokluyorsak key orda olmalı. */}
-              <Card  par={par} title={title} a={i}></Card>
-            </Grid.Col>
-          ))}
-
+        {list.map(({ par, title }, i) => (
+          <Grid.Col span={4} key={`index ${i}`}>
+            {" "}
+            {/* hangi elemanı map'liyorsak, çokluyorsak key orda olmalı. */}
+            <Card par={par} title={title} a={i}></Card>
+          </Grid.Col>
+        ))}
       </Grid>
-
-      
     </Container>
   );
 }
