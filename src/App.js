@@ -95,10 +95,13 @@ function App() {
 
       <Grid className="Cards">
         {list.map(({ par, title }, i) => (
-          <Grid.Col span={4} key={`index ${i}`}>
-            {" "}
+          <Grid.Col span={4} key={`index ${i}`}> {/* Bu örnekte key={index ${i}} kullanarak i değişkeninin her döngü adımında aldığı değeri kullanarak benzersiz bir key değeri oluşturulur. Bu şekilde, her bir sütunun farklı bir key değeri olması sağlanarak, React'in daha verimli çalışmasına yardımcı olunur. */}
             {/* hangi elemanı map'liyorsak, çokluyorsak key orda olmalı. */}
-            <Card par={par} title={title} a={i}></Card>
+            <Card par={par} title={title} i={i} click={() => {
+              let copyList = [...list]
+              copyList.splice(i, 1)
+              setList(copyList)
+            }}></Card>
           </Grid.Col>
         ))}
       </Grid>
